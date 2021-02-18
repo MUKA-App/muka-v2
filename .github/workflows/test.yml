@@ -6,9 +6,8 @@ on:
 jobs:
   lint:
     runs-on: ubuntu-latest
-    runs:
-      using: 'docker'
-      image: 'docker/php/Dockerfile'
+    container:
+      image: '../../../docker/php/Dockerfile'
     env:
       APP_KEY: base64:cgnG+m6Mw9npiIBLIQQwzEhk9d99PK9MwwKv/UJCHfY=
       APP_URL: https://muka.local
