@@ -14,11 +14,15 @@ services:
       mukav2:
 
   php:
-    environment:
-      - COMPOSER_MEMORY_LIMIT=-1
-    build:
-      context: .
-      dockerfile: docker/php/Dockerfile
+    image: mukaapp/dev-env-php:v1
+    volumes:
+      - ./:/var/www/html
+    networks:
+      mukav2:
+
+  worker:
+    image: mukaapp/dev-env-php:v1
+    command: php artisan queue:listen
     volumes:
       - ./:/var/www/html
     networks:
