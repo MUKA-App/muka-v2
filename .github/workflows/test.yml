@@ -46,7 +46,7 @@ jobs:
         shell: sh
 
       - name: Larastan
-        run: vendor/bin/phpstan analyse -c ./phpstan.neon
+        run: vendor/bin/phpstan analyse -c ./phpstan.neon --memory-limit=4000M
         shell: sh
   phpunit:
     runs-on: ubuntu-latest
