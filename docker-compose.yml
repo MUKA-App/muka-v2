@@ -1,0 +1,70 @@
+version: '3'
+
+services:
+  apache:
+    build:
+      context: .
+      dockerfile: docker/apache/Dockerfile
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - .:/var/www/html
+    networks:
+      mukav2:
+
+  php:
+    environment:
+      - COMPOSER_MEMORY_LIMIT=-1
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    volumes:
+      - ./:/var/www/html
+    networks:
+      mukav2:
+
+  db:
+    image: mysql:8.0.20
+    volumes:
+      - db-volume:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: mukav2
+      MYSQL_PASSWORD: mukav2
+      MYSQL_DATABASE: mukav2
+    ports:
+      - 3306:3306
+    networks:
+      mukav2:
+
+  testingdb:
+    image: mysql:8.0.20
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: mukav2
+      MYSQL_PASSWORD: mukav2
+      MYSQL_DATABASE: mukav2
+    networks:
+      mukav2:
+
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+    networks:
+      mukav2:
+
+  memcached:
+    image: 'memcached'
+    ports:
+      - '11211:11211'
+    networks:
+      mukav2:
+
+volumes:
+  db-volume:
+
+networks:
+  mukav2:

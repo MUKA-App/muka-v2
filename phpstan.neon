@@ -1,0 +1,11 @@
+includes:
+    - vendor/nunomaduro/larastan/extension.neon
+
+parameters:
+    excludePaths:
+        - app/Helpers/LoggingConfiguration.php
+    paths:
+        - app
+
+    # The level 8 is the highest level
+    level: 2
