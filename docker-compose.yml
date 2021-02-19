@@ -51,6 +51,8 @@ services:
       MYSQL_DATABASE: mukav2
     networks:
       mukav2:
+    tmpfs:
+      - /var/lib/mysql
 
   mailhog:
     image: mailhog/mailhog
