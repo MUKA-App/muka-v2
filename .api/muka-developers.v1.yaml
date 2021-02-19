@@ -1,0 +1,217 @@
+openapi: 3.0.0
+info:
+  title: "MUKA Developers' API"
+  version: '1.0'
+  description: "Welcome to the MUKA developers' API!"
+  contact:
+    url: 'https://www.mukaapp.com/'
+servers:
+  - url: 'http://127.0.0.1/api'
+paths:
+  /profiles/create:
+    post:
+      summary: Create profile
+      operationId: create-profile
+      description: Create a profile
+      tags:
+        - Profile
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                first_name:
+                  $ref: '#/components/schemas/Profile/properties/first_name'
+                last_name:
+                  $ref: '#/components/schemas/Profile/properties/last_name'
+                bio:
+                  $ref: '#/components/schemas/Profile/properties/bio'
+                gender:
+                  $ref: '#/components/schemas/Profile/properties/gender'
+                city:
+                  $ref: '#/components/schemas/Location/properties/city'
+                country:
+                  $ref: '#/components/schemas/Location/properties/country_code'
+                instruments:
+                  $ref: '#/components/schemas/Profile/properties/instruments'
+                institution:
+                  $ref: '#/components/schemas/Profile/properties/institution'
+                birt_date:
+                  $ref: '#/components/schemas/Profile/properties/birth_date'
+              required:
+                - first_name
+                - last_name
+                - gender
+                - city
+                - country
+                - instruments
+                - institution
+                - birt_date
+      responses:
+        '201':
+          $ref: '#/components/responses/ProfileResponse'
+    parameters: []
+components:
+  schemas:
+    Profile:
+      title: Profile
+      description: Profile
+      type: object
+      properties:
+        id:
+          type: string
+          default: uuid
+          format: uuid
+          example: 62afb965-10fe-4f46-816b-90d319798aad
+        slug:
+          type: string
+          example: bob-dunder-a3uh54
+        first_name:
+          type: string
+          example: Bob
+        last_name:
+          type: string
+          example: Dunder
+        bio:
+          $ref: '#/components/schemas/Bio'
+        gender:
+          $ref: '#/components/schemas/Gender'
+        profile_image_url:
+          type: string
+          format: uri
+          maxLength: 191
+          example: 'https://example.com'
+        location:
+          $ref: '#/components/schemas/Location'
+        instruments:
+          $ref: '#/components/schemas/Instruments'
+        institution:
+          type: string
+          example: Royal Northern College of Music
+          maxLength: 140
+        birth_date:
+          type: string
+          format: date-time
+        is_owner:
+          type: boolean
+      required:
+        - id
+        - slug
+        - first_name
+        - last_name
+        - bio
+        - profile_image_url
+        - location
+        - is_owner
+        - gender
+        - instruments
+        - institution
+        - birth_date
+    Instruments:
+      type: array
+      title: Instruments
+      uniqueItems: true
+      items:
+        type: string
+        enum:
+          - Accordion
+          - Acoustic Guitar
+          - Bagpipes
+          - Banjo
+          - Bass Guitar
+          - Bongo Drums
+          - Bugle
+          - Cello
+          - Clarinet
+          - Cymbals
+          - Drums
+          - Electric Guitar
+          - Flute
+          - French Horn
+          - Harmonica
+          - Harp
+          - Keyboard
+          - Maracas
+          - Organ
+          - Pan Flute
+          - Piano
+          - Recorder
+          - Saxophone
+          - Sitar
+          - Tambourine
+          - Percussion
+          - Trombone
+          - Trumpet
+          - Tuba
+          - Ukulele
+          - Violin
+          - Xylophone
+          - Bassoon
+          - Castanets
+          - Didgeridoo
+          - Double Bass
+          - Gong
+          - Harpsichord
+          - Lute
+          - Mandolin
+          - Oboe
+          - Piccolo
+          - Viola
+          - Singer
+          - Composer/Songwriter
+          - Euphonium
+          - DJ
+          - Producer
+          - Fiddle
+          - Vocals
+    Location:
+      title: Location
+      type: object
+      nullable: true
+      properties:
+        country_code:
+          type: string
+          example: GB
+          minLength: 2
+          maxLength: 2
+        country:
+          type: string
+          example: United Kingdom
+        city:
+          type: string
+          example: Manchester
+      required:
+        - country_code
+        - country
+        - city
+    Gender:
+      type: string
+      title: Gender
+      enum:
+        - Male
+        - Female
+        - Non-Binary/Other
+        - Rather not say
+      example: Male
+    Bio:
+      type: string
+      maxLength: 4000
+      title: AboutMe
+      example: 'When someone comes along and expresses him or herself as freely as they think, people flock to it. They enjoy it. The key to happiness doesn’t lay in numbers in a bank account but in the way we make others feel and the way they make us feel.'
+  responses:
+    ProfileResponse:
+      description: A single profile response
+      content:
+        application/json:
+          schema:
+            title: ProfileResponse
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                $ref: '#/components/schemas/Profile'
+
+tags:
+  - name: Profile
