@@ -8,16 +8,15 @@ use App\Exceptions\DuplicateUserRegistrationException;
 use App\Exceptions\UserVerificationException;
 use App\Models\User;
 use App\Notifications\EmailVerification;
-use App\Repositories\User\ProfileRepositoryInterface;
-use Carbon\Carbon;
+use App\Repositories\User\UserRepositoryInterface;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
 
 class RegisterService
 {
-    private ProfileRepositoryInterface $userRepository;
+    private UserRepositoryInterface $userRepository;
 
-    public function __construct(ProfileRepositoryInterface $userRepository)
+    public function __construct(UserRepositoryInterface $userRepository)
     {
         $this->userRepository = $userRepository;
     }
