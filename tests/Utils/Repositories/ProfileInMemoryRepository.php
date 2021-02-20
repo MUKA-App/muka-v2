@@ -3,9 +3,9 @@
 namespace Tests\Utils\Repositories;
 
 use App\Models\User;
-use App\Repositories\User\UserRepositoryInterface;
+use App\Repositories\User\ProfileRepositoryInterface;
 
-class UserInMemoryRepository implements UserRepositoryInterface
+class ProfileInMemoryRepository implements ProfileRepositoryInterface
 {
     /** @var User[] */
     private array $users = [];

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * Class Location
@@ -42,5 +43,13 @@ class Location extends Model
     public function getCountry(): string
     {
         return $this->country;
+    }
+
+    /**
+     * Defines one-to-many between profile & location
+     */
+    public function user(): HasMany
+    {
+        return $this->hasMany(Profile::class);
     }
 }

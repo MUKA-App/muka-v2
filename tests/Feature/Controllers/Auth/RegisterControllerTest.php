@@ -3,7 +3,7 @@
 namespace Tests\Feature\Controllers\Auth;
 
 use App\Http\Resources\UserResource;
-use App\Repositories\User\UserRepositoryInterface;
+use App\Repositories\User\ProfileRepositoryInterface;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\App;
 use Tests\TestCase;
@@ -13,12 +13,12 @@ class RegisterControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected UserRepositoryInterface $userRepository;
+    protected ProfileRepositoryInterface $userRepository;
 
     public function setUp(): void
     {
         parent::setUp();
-        $this->userRepository = App::make(UserRepositoryInterface::class);
+        $this->userRepository = App::make(ProfileRepositoryInterface::class);
     }
 
     /**

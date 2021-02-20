@@ -8,7 +8,7 @@ info:
 servers:
   - url: 'http://127.0.0.1/api'
 paths:
-  /profiles/create:
+  /profile:
     post:
       summary: Create profile
       operationId: create-profile
@@ -51,7 +51,82 @@ paths:
       responses:
         '201':
           $ref: '#/components/responses/ProfileResponse'
+        '401':
+          description: Unauthenticated
+        '409':
+          description: This user already has a profile
     parameters: []
+    patch:
+      summary: Edit profile
+      operationId: edit-profile
+      description: Edit a profile
+      tags:
+        - Profile
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                first_name:
+                  $ref: '#/components/schemas/Profile/properties/first_name'
+                last_name:
+                  $ref: '#/components/schemas/Profile/properties/last_name'
+                bio:
+                  $ref: '#/components/schemas/Profile/properties/bio'
+                gender:
+                  $ref: '#/components/schemas/Profile/properties/gender'
+                city:
+                  $ref: '#/components/schemas/Location/properties/city'
+                country:
+                  $ref: '#/components/schemas/Location/properties/country_code'
+                instruments:
+                  $ref: '#/components/schemas/Profile/properties/instruments'
+                institution:
+                  $ref: '#/components/schemas/Profile/properties/institution'
+                birt_date:
+                  $ref: '#/components/schemas/Profile/properties/birth_date'
+      responses:
+        '200':
+          $ref: '#/components/responses/ProfileResponse'
+        '401':
+          description: Unauthenticated
+        '404':
+          description: This user does not have a profile
+    get:
+      summary: Get user profile
+      operationId: get-profile-by-slug
+      description: Get the profile of the currently authenticated user
+      tags:
+        - Profile
+      responses:
+        '200':
+          $ref: '#/components/responses/ProfileResponse'
+        '401':
+          description: Unauthenticated
+        '404':
+          description: This user does not have a profile
+  /profile/{slug}:
+    parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+        description: ''
+    get:
+      summary: Get a profile by slug
+      operationId: get-profile-by-slug
+      description: Get a profile by slug
+      tags:
+        - Profile
+      responses:
+        '200':
+          $ref: '#/components/responses/ProfileResponse'
+        '401':
+          description: Unauthenticated
+        '404':
+          description: This profile does not exist
 components:
   schemas:
     Profile:
@@ -197,7 +272,7 @@ components:
     Bio:
       type: string
       maxLength: 4000
-      title: AboutMe
+      title: Bio
       example: 'When someone comes along and expresses him or herself as freely as they think, people flock to it. They enjoy it. The key to happiness doesn’t lay in numbers in a bank account but in the way we make others feel and the way they make us feel.'
   responses:
     ProfileResponse:

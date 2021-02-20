@@ -8,24 +8,24 @@ use App\Exceptions\DuplicateUserRegistrationException;
 use App\Exceptions\UserVerificationException;
 use App\Models\User;
 use App\Notifications\EmailVerification;
-use App\Repositories\User\UserRepositoryInterface;
+use App\Repositories\User\ProfileRepositoryInterface;
 use App\Services\RegisterService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
-use Tests\Utils\Repositories\UserInMemoryRepository;
+use Tests\Utils\Repositories\ProfileInMemoryRepository;
 
 class RegisterServiceTest extends TestCase
 {
 
-    protected UserRepositoryInterface $userRepository;
+    protected ProfileRepositoryInterface $userRepository;
     protected RegisterService $service;
 
     public function setUp(): void
     {
         parent::setUp();
-        $this->userRepository = new UserInMemoryRepository();
+        $this->userRepository = new ProfileInMemoryRepository();
         $this->service = new RegisterService($this->userRepository);
     }
 
