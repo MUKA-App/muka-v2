@@ -37,7 +37,7 @@ class ProfileFactory extends Factory
             'last_name' => $lastName,
             'slug' => SlugGenerator::generate($firstName . ' ' . $lastName),
             'gender' => $this->faker->randomElement(Genders::GENDERS),
-            'institution' => $this->faker->text,
+            'institution' => $this->faker->text(255),
             'instruments' => json_encode($this->faker->randomElements(Instruments::INSTRUMENTS, 5)),
             'birth_date' => Carbon::now(),
             'bio' => $this->faker->text(4000),

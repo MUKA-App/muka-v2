@@ -188,7 +188,7 @@ components:
         profile_image_url:
           type: string
           format: uri
-          maxLength: 191
+          maxLength: 2000
           example: 'https://example.com'
         location:
           $ref: '#/components/schemas/Location'
@@ -197,7 +197,7 @@ components:
         institution:
           type: string
           example: Royal Northern College of Music
-          maxLength: 140
+          maxLength: 255
         birth_date:
           type: string
           format: date-time

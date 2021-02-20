@@ -8,13 +8,9 @@ use App\Library\Genders;
 use App\Models\Location;
 use App\Models\Profile;
 use App\Models\User;
-use App\Repositories\Profiles\ProfileRepositoryInterface;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class ProfileControllerTest extends TestCase
@@ -30,8 +26,6 @@ class ProfileControllerTest extends TestCase
 
     private array $updateData;
 
-    private ProfileRepositoryInterface $repository;
-
     public function setUp(): void
     {
         parent::setUp();
@@ -41,7 +35,6 @@ class ProfileControllerTest extends TestCase
 
         $this->requestData = $this->requestData();
         $this->updateData = $this->updateData();
-        $this->repository = App::make(ProfileRepositoryInterface::class);
     }
 
     /**
@@ -107,7 +100,7 @@ class ProfileControllerTest extends TestCase
 
         $data = $response->decodeResponseJson();
 
-        $this->assertEquals("This profile does not exist", $data['message']);
+        $this->assertEquals("This user does not have a profile", $data['message']);
     }
 
     /**
