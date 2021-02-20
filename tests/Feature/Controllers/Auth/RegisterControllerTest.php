@@ -27,7 +27,7 @@ class RegisterControllerTest extends TestCase
     public function it_should_add_user_correctly()
     {
         $this->fakeEventFacade();
-        $email = 'bob@matchmaker.fm';
+        $email = 'test@test.com';
 
         $response = $this->json('POST', '/register', [
             'email' => $email,

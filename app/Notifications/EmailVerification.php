@@ -7,10 +7,8 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class EmailVerification extends Notification implements ShouldQueue
+class EmailVerification extends Notification
 {
-    use Queueable;
-
     /**
      * Get the notification's delivery channels.
      *
@@ -32,7 +30,7 @@ class EmailVerification extends Notification implements ShouldQueue
     {
         return (new MailMessage())
             ->subject('Welcome to Muka - Verify your email address')
-            ->view('emails.emailVerification', [
+            ->view('email.emailVerification', [
                 'notifiable' => $notifiable
             ]);
     }

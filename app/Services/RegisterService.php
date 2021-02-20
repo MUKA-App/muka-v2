@@ -38,6 +38,7 @@ class RegisterService
 
         $user = User::create($email, $password);
         $this->userRepository->save($user);
+        $this->sendVerificationEmail($email);
         return $user;
     }
 
