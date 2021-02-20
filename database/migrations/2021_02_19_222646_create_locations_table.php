@@ -31,7 +31,7 @@ class CreateLocationsTable extends Migration
     public function up()
     {
         Schema::create('locations', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('country');
             $table->string('country_code', 2);
             $table->string('city');
