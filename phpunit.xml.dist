@@ -22,6 +22,6 @@
     <server name="SESSION_DRIVER" value="array"/>
     <env name="DB_CONNECTION" value="mysql"/>
     <env name="DB_HOST" value="testingdb"/>
-    <env name="FILESYSTEM_DRIVER" value="s3"/>
+    <env name="FILESYSTEM_DRIVER" value="public"/>
   </php>
 </phpunit>

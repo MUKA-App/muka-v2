@@ -23,7 +23,7 @@ abstract class TestCase extends BaseTestCase
     {
         parent::setUp();
 
-        Storage::fake('s3', [
+        Storage::fake('public', [
             'url' => env('APP_URL') . '/uploads',
         ]);
 

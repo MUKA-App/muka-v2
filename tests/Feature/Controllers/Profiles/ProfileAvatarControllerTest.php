@@ -66,7 +66,7 @@ class ProfileAvatarControllerTest extends TestCase
      */
     private function assertImageMissing($image): void
     {
-        Storage::disk('s3')
+        Storage::disk('public')
             ->assertMissing('profile_pictures/' . $image->hashName());
     }
 
@@ -77,7 +77,7 @@ class ProfileAvatarControllerTest extends TestCase
     private function assertImageExists($image): void
     {
         // Assert new image stored
-        Storage::disk('s3')
+        Storage::disk('public')
             ->assertExists('/profile_pictures/' . $image->hashName());
 
         $this->assertDatabaseHas('profiles', [
