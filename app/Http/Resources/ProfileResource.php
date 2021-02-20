@@ -26,7 +26,8 @@ class ProfileResource extends JsonResource
             'last_name' => $profile->getLastName(),
             'gender' => $profile->getGender(),
             'bio' => $profile->getBio(),
-            'profile_image_url' => Storage::url($profile->getProfileImageUrl()),
+            'profile_image_url' => $profile->getProfileImageUrl()
+                ? Storage::url($profile->getProfileImageUrl()) : 'not found',
             'location' => $profile->getLocation(),
             'instruments' => $profile->getInstruments(),
             'institution' => $profile->getInstitution(),

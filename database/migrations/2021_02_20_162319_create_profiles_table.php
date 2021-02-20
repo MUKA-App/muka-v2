@@ -22,8 +22,8 @@ class CreateProfilesTable extends Migration
             $table->string('institution');
             $table->json('instruments');
             $table->string('bio', 4000);
-            $table->bigInteger('location_id')->unsigned();
-            $table->uuid('user_id');
+            $table->bigInteger('location_id')->unsigned()->nullable();
+            $table->uuid('user_id')->unique();
             $table->string('profile_image_url', 2000)->nullable();
             $table->timestamp('birth_date');
             $table->timestamps();

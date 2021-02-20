@@ -9,13 +9,14 @@ use App\Library\Genders;
 use App\Library\Instruments;
 use App\Models\Profile;
 use App\Repositories\Profiles\ProfileRepositoryInterface;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
-class ProfilesController extends Controller
+class ProfileController extends Controller
 {
     protected ProfileRepositoryInterface $repository;
     protected Request $request;
@@ -95,12 +96,13 @@ class ProfilesController extends Controller
             $this->request['bio'],
             $user->getId(),
             $this->request['instruments'],
-            $this->request['birth_date']
+            Carbon::create($this->request['birth_date'])
         );
 
         $this->repository->save($profile);
 
         $profile->setLocation($this->request['country'], $this->request['city']);
+        $this->repository->save($profile);
 
         return new ProfileResource($profile);
     }
@@ -128,7 +130,7 @@ class ProfilesController extends Controller
             $this->request['institution'],
             $this->request['bio'],
             $this->request['instruments'],
-            $this->request['birth_date']
+            $this->request['birth_date'] ? Carbon::create($this->request['birth_date']) : null
         );
 
         $this->repository->save($profile);
@@ -136,6 +138,7 @@ class ProfilesController extends Controller
         if (isset($this->request['country']) && isset($this->request['city'])) {
             $profile->location()->dissociate();
             $profile->setLocation($this->request['country'], $this->request['city']);
+            $this->repository->save($profile);
         }
 
         return new ProfileResource($profile);

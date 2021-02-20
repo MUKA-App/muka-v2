@@ -55,6 +55,8 @@ paths:
           description: Unauthenticated
         '409':
           description: This user already has a profile
+        '422':
+          description: Invalid data
     parameters: []
     patch:
       summary: Edit profile
@@ -93,6 +95,8 @@ paths:
           description: Unauthenticated
         '404':
           description: This user does not have a profile
+        '422':
+          description: Invalid data
     get:
       summary: Get user profile
       operationId: get-user-profile
@@ -138,6 +142,8 @@ paths:
           description: Unauthenticated
         '404':
           description: This user does not have a profile
+        '422':
+          description: Invalid data
       requestBody:
         content:
           multipart/form-data:

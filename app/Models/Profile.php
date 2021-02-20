@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Mews\Purifier\Facades\Purifier;
 
 /**
  * Class User
@@ -142,7 +143,7 @@ class Profile extends Model
         if (!isset($firstName)) {
             return;
         }
-        $this->first_name = $firstName;
+        $this->first_name = Purifier::clean($firstName);
     }
 
     private function setLastName(?string $lastName)
@@ -150,7 +151,7 @@ class Profile extends Model
         if (!isset($lastName)) {
             return;
         }
-        $this->last_name = $lastName;
+        $this->last_name = Purifier::clean($lastName);
     }
 
     private function setGender(?string $gender)
@@ -166,7 +167,7 @@ class Profile extends Model
         if (!isset($bio)) {
             return;
         }
-        $this->bio = $bio;
+        $this->bio = Purifier::clean($bio);
     }
 
     private function setInstitution(?string $institution)
@@ -174,7 +175,7 @@ class Profile extends Model
         if (!isset($institution)) {
             return;
         }
-        $this->institution = $institution;
+        $this->institution = Purifier::clean($institution);
     }
 
     private function setInstruments(?array $instruments)
@@ -254,7 +255,7 @@ class Profile extends Model
         return $this->birth_date;
     }
 
-    public function getProfileImageUrl(): string
+    public function getProfileImageUrl(): ?string
     {
         return $this->profile_image_url;
     }
