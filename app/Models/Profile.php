@@ -303,4 +303,9 @@ class Profile extends Model
     {
         return $this->location;
     }
+
+    public function setProfileImageUrl(string $profile_image_url): void
+    {
+        $this->profile_image_url = $profile_image_url;
+    }
 }

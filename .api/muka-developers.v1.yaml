@@ -95,7 +95,7 @@ paths:
           description: This user does not have a profile
     get:
       summary: Get user profile
-      operationId: get-profile-by-slug
+      operationId: get-user-profile
       description: Get the profile of the currently authenticated user
       tags:
         - Profile
@@ -127,6 +127,33 @@ paths:
           description: Unauthenticated
         '404':
           description: This profile does not exist
+  /profile/avatar:
+    put:
+      summary: Add Avatar
+      operationId: put-profile-avatar
+      responses:
+        '204':
+          description: Avatar created or updated
+        '401':
+          description: Unauthenticated
+        '404':
+          description: This user does not have a profile
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                avatar:
+                  type: string
+                  format: binary
+              required:
+                - avatar
+        description: ''
+      parameters: []
+      description: Uploadas a new avatar to the authenticated user's guest profile
+      tags:
+        - Profile
 components:
   schemas:
     Profile:

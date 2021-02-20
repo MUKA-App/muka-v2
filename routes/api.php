@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Profiles\ProfileAvatarController;
 use App\Http\Controllers\Profiles\ProfilesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -30,5 +31,6 @@ Route::prefix('/profile')->middleware('auth')->group(function () {
     Route::get('/', [ProfilesController::class, 'mine']);
     Route::post('/', [ProfilesController::class, 'create']);
     Route::patch('/', [ProfilesController::class, 'edit']);
+    Route::put('/avatar', [ProfileAvatarController::class, 'putAvatar']);
     Route::get('/{slug}', [ProfilesController::class, 'show']);
 });
