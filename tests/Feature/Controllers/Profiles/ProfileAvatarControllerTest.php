@@ -4,14 +4,11 @@ namespace Tests\Feature\Controllers\Profiles;
 
 use App\Models\Profile;
 use App\Models\User;
-use App\Repositories\ProfileRepositoryInterface;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
-use Tests\Utils\Traits\Profiles\ProfilesTrait;
 
 class ProfileAvatarControllerTest extends TestCase
 {
@@ -20,23 +17,21 @@ class ProfileAvatarControllerTest extends TestCase
 
     private User $user;
 
-    private GuestProfile $guest;
+    private Profile $profile;
 
     private UploadedFile $image;
 
     private UploadedFile $newImage;
 
-    private ProfileRepositoryInterface $repository;
 
     public function setUp(): void
     {
         parent::setUp();
-        $this->user     = factory(User::class)->create();
-        $this->image    = UploadedFile::fake()->image('avatar.png');
+        $this->user = User::factory()->create();
+        $this->image = UploadedFile::fake()->image('avatar.png');
         $this->newImage = UploadedFile::fake()->image('new-avatar.png');
         // Authenticate as created user
         $this->be($this->user);
-        $this->repository = App::make(ProfileRepositoryInterface::class);
     }
 
     /**
@@ -45,19 +40,22 @@ class ProfileAvatarControllerTest extends TestCase
      */
     public function test_put_endpoint_adds_avatar()
     {
-        $this->guest = $this->createGuestForUser($this->user, $this->repository);
-        $this->guest->avatar_url = null;
-        $this->repository->save($this->guest);
+        $this->profile = Profile::factory()->create([
+            'profile_image_url' => null,
+            'user_id' => $this->user->getId()
+        ]);
 
         // Assert no avatar
-        $this->assertEmpty($this->guest->avatar_url);
+        $this->assertEmpty($this->profile->getProfileImageUrl());
         $this->assertImageMissing($this->image);
 
         // Make request with image
-        $response = $this->json('put', '/api/profiles/guests/avatar', [
+        $response = $this->json('put', '/api/profile/avatar', [
             'avatar' => $this->image
         ]);
         $response->assertStatus(204);
+
+        $this->assertResponseMatchesApiSpecs($response, '/profile/avatar', 'put');
 
         $this->assertImageExists($this->image);
     }
@@ -68,8 +66,8 @@ class ProfileAvatarControllerTest extends TestCase
      */
     private function assertImageMissing($image): void
     {
-        Storage::disk('public-test')
-            ->assertMissing('guest_avatars/' . $image->hashName());
+        Storage::disk('s3')
+            ->assertMissing('profile_pictures/' . $image->hashName());
     }
 
     /**
@@ -79,12 +77,12 @@ class ProfileAvatarControllerTest extends TestCase
     private function assertImageExists($image): void
     {
         // Assert new image stored
-        Storage::disk('public-test')
-            ->assertExists('guest_avatars/' . $image->hashName());
+        Storage::disk('s3')
+            ->assertExists('/profile_pictures/' . $image->hashName());
 
-        $this->assertDatabaseHas('guest_profiles', [
-            'id'         => $this->guest->id,
-            'avatar_url' => 'guest_avatars/' . $image->hashName()
+        $this->assertDatabaseHas('profiles', [
+            'id' => $this->profile->id,
+            'profile_image_url' => 'profile_pictures/' . $image->hashName()
         ]);
     }
 
@@ -94,13 +92,17 @@ class ProfileAvatarControllerTest extends TestCase
      */
     public function test_put_endpoint_overrides_old_image()
     {
-        $this->guest = $this->createGuestForUser($this->user, $this->repository);
+        $this->profile = Profile::factory()->create([
+            'user_id' => $this->user->getId()
+        ]);
         $this->manuallyStoreImage($this->image);
 
-        $response = $this->json('put', '/api/profiles/guests/avatar', [
+        $response = $this->json('put', '/api/profile/avatar', [
             'avatar' => $this->newImage
         ]);
         $response->assertStatus(204);
+
+        $this->assertResponseMatchesApiSpecs($response, '/profile/avatar', 'put');
 
         // Assert first image removed
         $this->assertImageMissing($this->image);
@@ -112,13 +114,14 @@ class ProfileAvatarControllerTest extends TestCase
      * The controller should return an invalid image type error
      * @test
      */
-    public function test_database_returns_invalid_image_type_error()
+    public function test_validation_returns_invalid_image_type_error()
     {
-        $this->guest = $this->createGuestForUser($this->user, $this->repository);
-        $response = $this->json('put', '/api/profiles/guests/avatar', [
+        $response = $this->json('put', '/api/profile/avatar', [
             'avatar' => UploadedFile::fake()->image('bob.gif')
         ]);
         $response->assertStatus(422);
+
+        $this->assertResponseMatchesApiSpecs($response, '/profile/avatar', 'put');
     }
 
     /**
@@ -127,11 +130,12 @@ class ProfileAvatarControllerTest extends TestCase
      */
     public function test_invalid_size_error()
     {
-        $this->guest = $this->createGuestForUser($this->user, $this->repository);
-        $response = $this->json('put', '/api/profiles/guests/avatar', [
+        $response = $this->json('put', '/api/profile/avatar', [
             'avatar' => $this->image->size(2049)
         ]);
         $response->assertStatus(422);
+
+        $this->assertResponseMatchesApiSpecs($response, '/profile/avatar', 'put');
     }
 
     /**
@@ -140,10 +144,12 @@ class ProfileAvatarControllerTest extends TestCase
      */
     public function test_controller_aborts_without_profile_configured()
     {
-        $response = $this->json('put', '/api/profiles/guests/avatar', [
+        $response = $this->json('put', '/api/profile/avatar', [
             'avatar' => $this->image
         ]);
         $response->assertStatus(404);
+
+        $this->assertResponseMatchesApiSpecs($response, '/profile/avatar', 'put');
     }
 
     /**
@@ -152,12 +158,12 @@ class ProfileAvatarControllerTest extends TestCase
      */
     private function manuallyStoreImage($image): void
     {
-        $this->guest->avatar_url = Storage::putFile('guest_avatars', $image);
-        $this->guest->save();
+        $this->profile->profile_image_url = Storage::putFile('profile_pictures', $image);
+        $this->profile->save();
 
-        $this->assertDatabaseHas('guest_profiles', [
-            'id' => $this->guest->id,
-            'avatar_url' => 'guest_avatars/' . $image->hashName()
+        $this->assertDatabaseHas('profiles', [
+            'id' => $this->profile->id,
+            'profile_image_url' => 'profile_pictures/' . $image->hashName()
         ]);
     }
 }

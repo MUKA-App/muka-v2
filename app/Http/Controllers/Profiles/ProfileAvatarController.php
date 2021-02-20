@@ -22,6 +22,11 @@ class ProfileAvatarController extends Controller
      */
     public function putAvatar(Request $request, ProfileRepositoryInterface $repository): JsonResponse
     {
+        // Validate image data type
+        $request->validate([
+            'avatar' => 'required|image|mimes:jpeg,png,jpg|max:2048'
+        ]);
+
         $user = Auth::user();
         // Aborts with 403 if user has no GP
 
@@ -31,12 +36,9 @@ class ProfileAvatarController extends Controller
             throw new ModelNotFoundException("This user does not have a profile");
         }
 
-        // Validate image data type
-        $request->validate([
-            'avatar' => 'required|image|mimes:jpeg,png,jpg|max:2048'
-        ]);
-
         $url = $request['avatar']->store('profile_pictures');
+
+        //dd(Storage::url($url));
 
         // Remove the existing image
         if ($profile->getProfileImageUrl() !== null) {

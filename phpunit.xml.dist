@@ -22,8 +22,6 @@
     <server name="SESSION_DRIVER" value="array"/>
     <env name="DB_CONNECTION" value="mysql"/>
     <env name="DB_HOST" value="testingdb"/>
-    <env name="FILESYSTEM_DRIVER" value="public-test"/>
-    <env name="FAVOURITE_PROFILE_LIMIT" value="1"/>
-    <env name="STRIPE_COUPON_ID_PRO" value="sndvETii"/>
+    <env name="FILESYSTEM_DRIVER" value="s3"/>
   </php>
 </phpunit>
