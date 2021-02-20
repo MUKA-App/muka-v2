@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use App\Models\Profile;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileResource extends JsonResource
 {
@@ -25,7 +26,7 @@ class ProfileResource extends JsonResource
             'last_name' => $profile->getLastName(),
             'gender' => $profile->getGender(),
             'bio' => $profile->getBio(),
-            'profile_image_url' => $profile->getProfileImageUrl(),
+            'profile_image_url' => Storage::url($profile->getProfileImageUrl()),
             'location' => $profile->getLocation(),
             'instruments' => $profile->getInstruments(),
             'institution' => $profile->getInstitution(),
