@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\RegistrationController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\ReactPageController;
@@ -32,6 +33,21 @@ Route::prefix('/register')->middleware('guest')->group(function () {
         Route::post('/resend', [VerificationController::class, 'resendEmail']);
     });
 });
+
+/*
+|--------------------------------------------------------------------------
+| Password Routes
+|--------------------------------------------------------------------------
+*/
+Route::get('/password/{any}', [ReactPageController::class, 'index'])
+    ->middleware('guest')
+    ->where('any', '.*');
+
+Route::prefix('/password')->middleware('guest')->group(function () {
+    Route::post('/forgot', [PasswordController::class, 'sendEmail']);
+    Route::post('/reset', [PasswordController::class, 'resetPassword']);
+});
+
 
 /*
 |--------------------------------------------------------------------------
