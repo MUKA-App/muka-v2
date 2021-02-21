@@ -7,9 +7,19 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class EmailVerification extends Notification implements ShouldQueue
+class PasswordResetEmail extends Notification implements ShouldQueue
 {
     use Queueable;
+
+    private $token;
+
+    /**
+     * @param string $token
+     */
+    public function __construct(string $token)
+    {
+        $this->token = $token;
+    }
 
     /**
      * Get the notification's delivery channels.
@@ -31,9 +41,10 @@ class EmailVerification extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage())
-            ->subject('Welcome to Muka - Verify your email address')
-            ->view('email.emailVerification', [
-                'notifiable' => $notifiable
+            ->subject('Your password reset request. ')
+            ->view('email.passwordResetEmail', [
+                'notifiable' => $notifiable,
+                'token' => $this->token
             ]);
     }
 

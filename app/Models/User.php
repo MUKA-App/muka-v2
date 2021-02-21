@@ -122,4 +122,9 @@ class User extends Authenticatable
         $this->verify_token = null;
         $this->email_verified_at = Carbon::now();
     }
+
+    public function resetPassword(string $password): void
+    {
+        $this->password = Hash::make($password);
+    }
 }
