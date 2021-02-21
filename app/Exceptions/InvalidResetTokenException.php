@@ -12,7 +12,7 @@ class InvalidResetTokenException extends Exception
 
     public function __construct(
         string $message = self::MESSAGE,
-        int $code = 400,
+        int $code = 404,
         Throwable $previous = null
     ) {
         parent::__construct($message, $code, $previous);
