@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.4",
+        "ext-json": "*",
         "aws/aws-sdk-php": "^3.173",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
@@ -16,7 +17,13 @@
         "laravel/framework": "^8.12",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.2",
-        "squizlabs/php_codesniffer": "*"
+        "league/flysystem-aws-s3-v3": "~1.0",
+        "league/openapi-psr7-validator": "^0.15.2",
+        "menarasolutions/geographer": "^0.3.9",
+        "mews/purifier": "^3.3",
+        "nyholm/psr7": "^1.4",
+        "squizlabs/php_codesniffer": "*",
+        "symfony/psr-http-message-bridge": "^2.1"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
@@ -52,6 +59,10 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "scripts": {
+        "post-install-cmd": [
+            "php artisan migrate --no-interaction --force",
+            "php artisan route:cache"
+        ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"

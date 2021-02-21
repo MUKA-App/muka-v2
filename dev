@@ -33,12 +33,12 @@ case "$1" in
     shift 1
     docker-compose exec php ./vendor/bin/phpstan analyse -c ./phpstan.neon --memory-limit=4000M
 ;;
-#'api_specs')
-#    shift 1
-#    npx speccy serve .api/muka-developers.v1.yaml &
-#;;
-#'close_specs')
-#    shift 1
-#    pkill -f speccy
-#;;
+'api_specs')
+    shift 1
+    npx speccy serve .api/muka-developers.v1.yaml &
+;;
+'close_specs')
+    shift 1
+    pkill -f speccy
+;;
 esac

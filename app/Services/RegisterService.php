@@ -9,7 +9,6 @@ use App\Exceptions\UserVerificationException;
 use App\Models\User;
 use App\Notifications\EmailVerification;
 use App\Repositories\User\UserRepositoryInterface;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
 
