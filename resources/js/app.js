@@ -25,7 +25,7 @@ export default function Dawid() {
       <h1>Hello</h1>
       <BrowserRouter>
         <Switch>
-          <Route path="/" exact component={Intro} >
+          <Route path="/" exact component={User} >
             <p>Any</p>
           </Route>
           <Route path="/login" exact>
@@ -36,9 +36,11 @@ export default function Dawid() {
     </div>
   );
 }
-// DOM element
-if (document.getElementById('App')) {
-    var React = require('react');
-    var ReactDOM = require('react-dom');
-    ReactDOM.render(<Dawid />, document.getElementById('App'));
-}
+
+ReactDOM.render(<Dawid />, document.getElementById('App'));
+// // DOM element
+// if (document.getElementById('App')) {
+//     var React = require('react');
+//     var ReactDOM = require('react-dom');
+//     ReactDOM.render(<Dawid />, document.getElementById('App'));
+// }
