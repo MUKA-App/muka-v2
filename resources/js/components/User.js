@@ -18,8 +18,3 @@ function User() {
 }
 
 export default User;
-
-// DOM element
-if (document.getElementById('user')) {
-    ReactDOM.render(<User />, document.getElementById('user'));
-}

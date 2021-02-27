@@ -12,4 +12,32 @@ require('./bootstrap');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-require('./components/User');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import '../css/app.css';
+
+import User from './components/User';
+
+export default function Dawid() {
+  return (
+    <div className="wrapper">
+      <h1>Hello</h1>
+      <BrowserRouter>
+        <Switch>
+          <Route path="/" exact component={Intro} >
+            <p>Any</p>
+          </Route>
+          <Route path="/login" exact>
+            <h2>Login page!</h2>
+          </Route>
+        </Switch>
+      </BrowserRouter>
+    </div>
+  );
+}
+
+// DOM element
+if (document.getElementById('App')) {
+    ReactDOM.render(<Dawid />, document.getElementById('App'));
+}

@@ -11,7 +11,7 @@
 
 <body>
 <!-- React root DOM -->
-<div id="user">
+<div id="App">
 </div>
 
 <!-- React JS -->
