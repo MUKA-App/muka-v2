@@ -36,8 +36,9 @@ export default function Dawid() {
     </div>
   );
 }
-
 // DOM element
 if (document.getElementById('App')) {
+    var React = require('react');
+    var ReactDOM = require('react-dom');
     ReactDOM.render(<Dawid />, document.getElementById('App'));
 }
