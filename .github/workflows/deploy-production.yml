@@ -40,7 +40,7 @@ jobs:
         run: |
           git checkout -b tag-branch ${{ steps.get_version.outputs.VERSION }}
           npm install
-          npm run build:prod
+          npm run prod
 
       - name: Commit everything
         run: |
