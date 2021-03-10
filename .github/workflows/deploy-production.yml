@@ -1,0 +1,56 @@
+name: Deploy to production
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build-and-deploy-to-production:
+    if: '!github.event.release.prerelease'
+
+    env:
+      GIT_EMAIL: mark.paveszka@gmail.com
+      GIT_USERNAME: JustPawe
+      FR_PRODUCTION_REPO_URL: ${{ secrets.PROD_REPO_URL }}
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Get release version
+        id: get_version
+        run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
+
+      - uses: webfactory/ssh-agent@v0.4.1
+        with:
+          ssh-private-key: ${{ secrets.PROD_SSH_PRIVATE_KEY }}
+
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+
+      - name: Configure Git
+        run: |
+          git config user.email $GIT_EMAIL
+          git config user.name $GIT_USERNAME
+
+      - name: Build FE app
+        run: |
+          git checkout -b tag-branch ${{ steps.get_version.outputs.VERSION }}
+          npm install
+          npm run prod
+
+      - name: Commit everything
+        run: |
+          git add -A
+          git commit -m "Release ${{ steps.get_version.outputs.VERSION }}"
+
+      - name: Deploy
+        run: |
+          git remote add fortrabbit $FR_PRODUCTION_REPO_URL
+          git push --force fortrabbit tag-branch:master
+        env:
+          # This avoids a failure when the client does not know the SSH Host already
+          GIT_SSH_COMMAND: 'ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
