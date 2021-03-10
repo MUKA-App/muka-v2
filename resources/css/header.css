@@ -1,0 +1,32 @@
+.headerContainer {
+    width: 100%;
+    /*min-height: 80px;*/
+    background-color: white;
+    overflow: auto;
+    border-bottom: 2px solid #cbe54e;
+}
+.generalLink{
+    padding: 20px;
+    float: right;
+    text-decoration: none;
+    border: 1px solid black;
+}
+.loginLink{
+    color: #cbe54e;
+    padding: 20px;
+    float: right;
+    text-decoration: none;
+    border: 1px solid black;
+}
+.joinLink{
+    color: white;
+    padding: 20px;
+    float: right;
+    text-decoration: none;
+    border: 1px solid black;
+}
+.header_logo {
+    height: 80px;
+    float: left;
+    border: 1px solid black;
+}
