@@ -11,8 +11,10 @@
     },
     "devDependencies": {
         "@babel/preset-react": "^7.0.0",
+        "@types/parse": "^2.18.3",
         "axios": "^0.21",
         "bootstrap": "^4.0.0",
+        "file-loader": "^6.2.0",
         "jquery": "^3.2",
         "laravel-mix": "^6.0.6",
         "lodash": "^4.17.19",
@@ -22,9 +24,16 @@
         "react-dom": "^17.0.1",
         "resolve-url-loader": "^3.1.2",
         "sass": "^1.15.2",
-        "sass-loader": "^8.0.0"
+        "sass-loader": "^8.0.0",
+        "url-loader": "^4.1.1"
     },
     "dependencies": {
-        "react-router-dom": "^5.2.0"
+        "json-parse-async": "^1.0.3",
+        "parse": "^3.1.0",
+        "path": "^0.12.7",
+        "program": "^1.0.0",
+        "react-native": "^0.63.4",
+        "react-router-dom": "^5.2.0",
+        "reactstrap": "^8.9.0"
     }
 }

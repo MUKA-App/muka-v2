@@ -18,6 +18,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import '../css/app.css';
 
 import User from './components/User';
+import Login from './components/Login';
 
 export default function Dawid() {
   return (
@@ -26,10 +27,9 @@ export default function Dawid() {
       <BrowserRouter>
         <Switch>
           <Route path="/" exact component={User} >
-            <p>Any</p>
           </Route>
           <Route path="/login" exact>
-            <h2>Login page!</h2>
+            <Login />
           </Route>
         </Switch>
       </BrowserRouter>
