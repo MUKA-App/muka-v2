@@ -1,6 +1,6 @@
 import {Link} from "react-router-dom";
 import React from "react";
-import logo from '../../data/header_muka_logo.png';
+import logo from '../../../public/images/header_muka_logo.png';
 import '../../css/header.css';
 
 export default function Header(props) {
