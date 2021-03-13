@@ -1,32 +1,35 @@
 .headerContainer {
     width: 100%;
-    /*min-height: 80px;*/
-    background-color: white;
-    overflow: auto;
+    min-height: 80px;
     border-bottom: 2px solid #cbe54e;
+    background-color: white;
+    font-size: 20px;
+    display: flex;
+    align-items: stretch;
+    justify-content: flex-end;
+}
+.headerLogo{
+    margin-right: auto;
+    height: 80px;
+    align-self: flex-start;
+    justify-self: flex-start;
 }
 .generalLink{
-    padding: 20px;
-    float: right;
-    text-decoration: none;
-    border: 1px solid black;
+    align-self: flex-end;
+    margin: inherit;
+    padding: 25px;
 }
 .loginLink{
     color: #cbe54e;
-    padding: 20px;
-    float: right;
-    text-decoration: none;
-    border: 1px solid black;
+    padding: 25px;
+    height: 80px;
+    text-align: center;
 }
 .joinLink{
-    color: white;
-    padding: 20px;
-    float: right;
-    text-decoration: none;
-    border: 1px solid black;
-}
-.header_logo {
+    text-align: center;
+    border-radius: 10px;
     height: 80px;
-    float: left;
-    border: 1px solid black;
+    color: white;
+    background-color: #cbe54e;
+    padding: 25px;
 }
