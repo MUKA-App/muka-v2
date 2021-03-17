@@ -1,0 +1,35 @@
+.headerContainer {
+    width: 100%;
+    min-height: 80px;
+    border-bottom: 2px solid #cbe54e;
+    background-color: white;
+    font-size: 20px;
+    display: flex;
+    align-items: stretch;
+    justify-content: flex-end;
+}
+.headerLogo{
+    margin-right: auto;
+    height: 80px;
+    align-self: flex-start;
+    justify-self: flex-start;
+}
+.generalLink{
+    align-self: flex-end;
+    margin: inherit;
+    padding: 25px;
+}
+.loginLink{
+    color: #cbe54e;
+    padding: 25px;
+    height: 80px;
+    text-align: center;
+}
+.joinLink{
+    text-align: center;
+    border-radius: 10px;
+    height: 80px;
+    color: white;
+    background-color: #cbe54e;
+    padding: 25px;
+}
