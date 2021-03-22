@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import '../../css/app.css';
+import '../../sass/app.scss';
 import Header from './Header';
 import Home from './Home';
 import About from './About';
