@@ -1,4 +1,4 @@
-import '../../css/app.css';
+import '../../sass/app.scss';
 
 export default function About () {
     return (
