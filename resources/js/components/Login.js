@@ -25,7 +25,7 @@ export default function Login () {
                       <input type="password" name="password" id="inputPassword" class="form-control login-input" required placeholder="Password"/>
                   </Row>
                   <Row className={"spacedRow"}>
-                    <button class="btn btn-lg login-btn" type="submit">
+                    <button className="btn btn-lg login-btn" type="submit">
                         Sign in
                     </button>
                   </Row>
