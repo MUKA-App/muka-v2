@@ -11,7 +11,7 @@ export default function Header(props) {
             <Link to={'/about'} className={"generalLink"}>About</Link>
             <Link to={'/sponsors'} className={"generalLink"}>Sponsors</Link>
             <Link to={'/login'} className={"loginLink"}>Login</Link>
-            <Link to={'/join'} className={"joinLink"}>Join Us</Link>
+            <Link to={'/register'} className={"joinLink"}>Join Us</Link>
         </div>
     );
 }

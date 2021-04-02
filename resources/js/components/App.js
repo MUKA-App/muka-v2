@@ -7,7 +7,7 @@ import Home from './Home';
 import About from './About';
 import Sponsors from './Sponsors';
 import Login from './Login';
-import Join from './Join';
+import Register from './Register';
 import Footer from './Footer';
 
 import {Redirect, BrowserRouter, Route, Switch} from 'react-router-dom';
@@ -19,7 +19,7 @@ export default function App() {
             <BrowserRouter>
                 <Header />
                 <Switch>
-                    <Route exact path={'/join'}><Join /></Route>
+                    <Route exact path={'/register'}><Register /></Route>
                     <Route exact path={'/login'}><Login /></Route>
                     <Route exact path={'/sponsors'}><Sponsors /></Route>
                     <Route exact path={'/home'}><Home /></Route>

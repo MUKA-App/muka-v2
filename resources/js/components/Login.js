@@ -44,7 +44,7 @@ export default function Login () {
             <div>
                 <h1 class="display-1" style="text-align: center">Welcome</h1>
                 <br>
-                <h5 class="h5" style="text-align: center">Join MUKA now and find people with the same passion as you!</h5>
+                <h5 class="h5" style="text-align: center">Register MUKA now and find people with the same passion as you!</h5>
             </div>
 
             <center><img src="{{ asset('images/homepage.png') }}" style="height: 250px" alt="Music is life"></center>
@@ -91,7 +91,7 @@ export default function Login () {
             </div>
             <div class="row">
                 <div class="col-sm">
-                    Not a member?<a class="link" href="/register">Join us here!</a>
+                    Not a member?<a class="link" href="/register">Register us here!</a>
                 </div>
             </div>
         </div>
