@@ -3,19 +3,18 @@ import '../../sass/app.scss';
 import React, {useState} from 'react';
 import axios from 'axios';
 import { withRouter } from "react-router-dom";
-
+import { Container, Row, Col } from 'reactstrap';
 
 function Register(props) {
 
     const [state, setState] = useState({
         email: "",
         password: "",
-        confirmPassword: "",
-        successMessage: null
+        confirmPassword: ""
     })
 
     const handleChange = (e) => {
-        const {id, value} = e.target
+        const {id, value} = e.target;
         setState(prevState => ({
             ...prevState,
             [id]: value
@@ -23,53 +22,39 @@ function Register(props) {
     }
 
     const sendDetailsToServer = () => {
-        if (state.email.length && state.password.length) {
-            // props.showError(null);
-            const payload = {
-                "email": state.email,
-                "password": state.password,
-            }
-            // TODO: this is hard coded. How to get .env of laravel?
-            axios.post('https://muka.local/register/', payload)
-                .then(function (response) {
-                    if (response.status === 200) {
-                        setState(prevState => ({
-                            ...prevState,
-                            'successMessage': 'Registration successful. Redirecting to home page..'
-                        }))
-                        redirectToHome();
-                        // props.showError(null)
+
+        const payload = {
+            "email": state.email,
+            "password": state.password,
+        };
+
+        axios.post(process.env.MIX_APP_BASE_URL + "/register", payload)
+            .then(function (response) {
+                    if (response.status === 201) {
+                        console.log("Successful registration.");
+                        props.history.push('/login')
                     } else {
-                        console.log("Error occurred.");
-                        // props.showError("Some error ocurred");
+                        console.log("Error occurred, code: " + response.status);
                     }
                 }
-                )
-                .catch(function (error) {
-                    console.log(error);
-                });
-        } else {
-            // props.showError('Please enter valid username and password')
-        }
+            )
+            .catch(function (error) {
+                console.log(error);
+            });
+    };
 
-    }
-    const redirectToHome = () => {
-        // props.updateTitle('Home')
-        props.history.push('/home');
-    }
-    const redirectToLogin = () => {
-        // props.updateTitle('Login')
-        props.history.push('/login');
-    }
     const handleSubmitClick = (e) => {
+
         e.preventDefault();
-        if (state.password === state.confirmPassword) {
-            sendDetailsToServer()
+
+        if (state.password !== state.confirmPassword) {
+            console.log("Non matching passwords.");
+        } else if (state.password.length < 8) {
+            console.log("Password length < 8.")
         } else {
-            console.log("Non matching passwords");
-            // props.showError('Passwords do not match');
+            sendDetailsToServer();
         }
-    }
+    };
 
     return (
         <div>
@@ -112,12 +97,9 @@ function Register(props) {
                     Register
                 </button>
             </form>
-            <div role="alert">
-                {state.successMessage}
-            </div>
             <div>
                 <span>Already have an account? </span>
-                <span onClick={() => redirectToLogin()}>Login here</span>
+                <span onClick={() => props.history.push('/login')}>Login here</span>
             </div>
         </div>
     )
