@@ -1,4 +1,3 @@
-// import '../../sass/app.scss';
 import '../../sass/login.scss';
 import hugeImg from '/images/huge_muka_logo.png';
 
@@ -32,14 +31,23 @@ function Register(props) {
 
         axios.post(process.env.MIX_APP_BASE_URL + "/register", payload)
             .then(function (response) {
-                    if (response.status === 201) {
-                        console.log("Successful registration.");
-                        props.history.push('/login')
-                    //    TODO: 409 toastify user exists
-                    //    TODO: 422 toastify invalid credentials
-                    //    TODO: 500, 400, st went wrong
-                    } else {
-                        console.log("Error occurred, code: " + response.status);
+                    switch (response.status) {
+                        case 201:
+                            console.log("Successful registration.");
+                            props.history.push('/register/confirm');
+                            break;
+                        case 409:
+                            console.log("User already exists.");
+                            break;
+                        case 422:
+                            console.log("Invalid credentials");
+                            break;
+                        case 400:
+                        case 500:
+                            console.log("Server error.");
+                            break;
+                        default:
+                            console.log("Other error occurred with code: " + response.status);
                     }
                 }
             )
