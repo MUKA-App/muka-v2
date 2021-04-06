@@ -12,7 +12,7 @@ function Register(props) {
         email: "",
         password: "",
         confirmPassword: ""
-    })
+    });
 
     const handleChange = (e) => {
         const {id, value} = e.target;
@@ -20,7 +20,7 @@ function Register(props) {
             ...prevState,
             [id]: value
         }))
-    }
+    };
 
     const sendDetailsToServer = () => {
 
@@ -123,51 +123,6 @@ function Register(props) {
                 </Col>
             </Row>
         </Container>
-        // <div>
-        //     <form>
-        //         <div>
-        //             <label>Email address</label>
-        //             <input type="email"
-        //                    className="form-control"
-        //                    id="email"
-        //                    placeholder="Enter email"
-        //                    value={state.email}
-        //                    onChange={handleChange}
-        //             />
-        //         </div>
-        //         <div>
-        //             <label>Password</label>
-        //             <input type="password"
-        //                    className="form-control"
-        //                    id="password"
-        //                    placeholder="Password"
-        //                    value={state.password}
-        //                    onChange={handleChange}
-        //             />
-        //         </div>
-        //         <div>
-        //             <label>Confirm Password</label>
-        //             <input type="password"
-        //                    className="form-control"
-        //                    id="confirmPassword"
-        //                    placeholder="Confirm Password"
-        //                    value={state.confirmPassword}
-        //                    onChange={handleChange}
-        //             />
-        //         </div>
-        //         <button
-        //             type="submit"
-        //             className="btn btn-primary"
-        //             onClick={handleSubmitClick}
-        //         >
-        //             Register
-        //         </button>
-        //     </form>
-        //     <div>
-        //         <span>Already have an account? </span>
-        //         <span onClick={() => props.history.push('/login')}>Login here</span>
-        //     </div>
-        // </div>
     )
 }
 

@@ -23,6 +23,8 @@ Route::get('/login', [ReactPageController::class, 'index'])->name('login');
 
 Route::post('/login', [LoginController::class, 'login']);
 
+Route::get('/verify/{token}', [ReactPageController::class, 'index'])->middleware('guest');
+
 Route::prefix('/register')->middleware('guest')->group(function () {
     Route::get('/', [ReactPageController::class, 'index'])->name('register');
     Route::post('/', [RegistrationController::class, 'register']);

@@ -1,7 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { PublicRoute, PrivateRoute } from "react-private-public-route";
+import {Redirect, BrowserRouter, Route, Switch} from 'react-router-dom';
 
 import '../../sass/app.scss';
+
 import Header from './Header';
 import Home from './Home';
 import About from './About';
@@ -9,8 +12,9 @@ import Sponsors from './Sponsors';
 import Login from './Login';
 import Register from './Register';
 import Footer from './Footer';
-
-import {Redirect, BrowserRouter, Route, Switch} from 'react-router-dom';
+import Dialog from "./Dialog";
+import CreateProfile from './CreateProfile';
+import Verify from "./Verify";
 
 export default function App() {
 
@@ -19,11 +23,14 @@ export default function App() {
             <BrowserRouter>
                 <Header />
                 <Switch>
-                    <Route exact path={'/register'}><Register /></Route>
-                    <Route exact path={'/login'}><Login /></Route>
-                    <Route exact path={'/sponsors'}><Sponsors /></Route>
-                    <Route exact path={'/home'}><Home /></Route>
-                    <Route exact path={'/about'}><About /></Route>
+                    <PublicRoute exact path={'/register'}><Register /></PublicRoute>
+                    <PublicRoute exact path={'/login'}><Login /></PublicRoute>
+                    <PublicRoute exact path={'/sponsors'}><Sponsors /></PublicRoute>
+                    <PublicRoute exact path={'/home'}><Home /></PublicRoute>
+                    <PublicRoute exact path={'/about'}><About /></PublicRoute>
+                    <PublicRoute path={'/verify/:token'} redirect={"/home"}><Verify /></PublicRoute>
+                    <PublicRoute exact path={'/register/confirm'}><Dialog head={'Registration successful'} body={'Please check your email for confirmation'}/></PublicRoute>
+                    <PrivateRoute exact path={'/profiles/create'}><CreateProfile /></PrivateRoute>
                     <Redirect to={"/home"}/>
                 </Switch>
             </BrowserRouter>
@@ -36,3 +43,11 @@ export default function App() {
 if (document.getElementById('user')) {
     ReactDOM.render(<App/>, document.getElementById('user'));
 }
+
+//<PrivateRoute
+//                 isAuthenticated={false}
+//                 restricted
+//                 redirect="/login"
+//                 path="/homepage"
+//                 component={Homepage}
+//                 />
