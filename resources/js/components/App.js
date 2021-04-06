@@ -43,11 +43,3 @@ export default function App() {
 if (document.getElementById('user')) {
     ReactDOM.render(<App/>, document.getElementById('user'));
 }
-
-//<PrivateRoute
-//                 isAuthenticated={false}
-//                 restricted
-//                 redirect="/login"
-//                 path="/homepage"
-//                 component={Homepage}
-//                 />
