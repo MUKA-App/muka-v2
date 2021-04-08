@@ -40,6 +40,10 @@
     color: white;
     border-color: $green-yellow;
 }
+.login-btn:hover {
+  background-color: $dark-grey;
+  color: $green-yellow;
+}
 
 .vertical-center {
   margin: 0;
