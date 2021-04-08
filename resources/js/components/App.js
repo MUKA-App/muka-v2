@@ -36,6 +36,7 @@ export default function App() {
                     <PrivateRoute exact path={'/profiles/create'}><CreateProfile/></PrivateRoute>
                     <PrivateRoute exact path={'/profile'}><Profile/></PrivateRoute>
                     <PrivateRoute exact path={'/dashboard'}><Dashboard/></PrivateRoute>
+                    {/*<PrivateRoute exact path={'/logout'}><Logout/></PrivateRoute>*/}
                     <Redirect to={"/home"}/>
                 </Switch>
             </BrowserRouter>

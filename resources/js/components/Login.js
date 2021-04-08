@@ -40,10 +40,8 @@ function Login(props) {
             .then(function (response) {
                     if (response.status === 200) {
                         console.log("Successful login.");
-
                         localStorage.setItem('auth', 'true');
-
-                        props.history.push('/profiles/create');
+                        props.history.push('/dashboard');
                     } else {
                         console.log("Other error occurred with code: " + response.status);
                     }
