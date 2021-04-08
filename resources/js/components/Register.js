@@ -81,7 +81,7 @@ function Register(props) {
                     </div>
                 </Col>
                 <Col>
-                    <div className={"vertical-center"}>
+                    <div className={"bottomdiv"}>
                         <form>
                             <Row className={"spacedRow"}>
                                 <input type="email"
