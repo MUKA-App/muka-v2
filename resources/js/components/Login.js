@@ -4,12 +4,14 @@ import React, {useState} from 'react';
 import {Container, Row, Col} from 'reactstrap';
 import hugeImg from '/images/huge_muka_logo.png';
 import axios from "axios";
+import {withRouter} from "react-router-dom";
 
-export default function Login(props) {
+function Login(props) {
 
     const [state, setState] = useState({
         email: "",
-        password: ""
+        password: "",
+        remember: false
     });
 
     const handleChange = (e) => {
@@ -19,18 +21,29 @@ export default function Login(props) {
             [id]: value
         }))
     };
+    const toggle = (e) => {
+        setState(prevState => ({
+            ...prevState,
+            remember: !prevState.remember
+        }))
+    };
 
     const sendDetailsToServer = () => {
 
         const payload = {
             "email": state.email,
             "password": state.password,
+            "remember_token": true
         };
 
         axios.post(process.env.MIX_APP_BASE_URL + "/login", payload)
             .then(function (response) {
                     if (response.status === 200) {
                         console.log("Successful login.");
+
+                        localStorage.setItem('auth', 'true');
+
+                        props.history.push('/profiles/create');
                     } else {
                         console.log("Other error occurred with code: " + response.status);
                     }
@@ -42,6 +55,7 @@ export default function Login(props) {
     };
 
     const handleSubmitClick = (e) => {
+        e.preventDefault();
         // TODO: Some validation to be added
         sendDetailsToServer();
     };
@@ -58,7 +72,7 @@ export default function Login(props) {
                     </div>
                 </Col>
                 <Col>
-                    <div className={"vertical-center"}>
+                    <div className={"bottomdiv"}>
                         <form>
                             <Row className={"spacedRow"}>
                                 <input type="email"
@@ -80,6 +94,15 @@ export default function Login(props) {
                                        required
                                        placeholder="Password"/>
                             </Row>
+                            <Row>
+                            <input
+                                name="checkbox"
+                                type="checkbox"
+                                checked={state.remember}
+                                onChange={toggle}
+                            />
+                                <label htmlFor="checkbox"> I want to stay logged in</label>
+                            </Row>
                             <Row className={"spacedRow"}>
                                 <button className="btn btn-lg login-btn" type="submit" onClick={handleSubmitClick}>
                                     Sign in
@@ -92,3 +115,5 @@ export default function Login(props) {
         </Container>
     )
 }
+
+export default withRouter(Login);
