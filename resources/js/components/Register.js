@@ -11,11 +11,13 @@ function Register(props) {
     const [state, setState] = useState({
         email: "",
         password: "",
-        confirmPassword: ""
+        confirmPassword: "",
+        checkedTC: false
     });
 
     const handleChange = (e) => {
-        const {id, value} = e.target;
+        const id = e.target.name;
+        const value = e.target.type === "checkbox" ? e.target.checked : e.target.value;
         setState(prevState => ({
             ...prevState,
             [id]: value
@@ -64,7 +66,9 @@ function Register(props) {
             console.log("Non matching passwords.");
         } else if (state.password.length < 8) {
             console.log("Password length < 8.")
-        } else {
+        } else if (!state.checked) {
+            console.log("Terms and Conditions not accepted")
+        }else{
             sendDetailsToServer();
         }
     };
@@ -112,6 +116,16 @@ function Register(props) {
                                        onChange={handleChange}
                                        required
                                        placeholder="Confirm Password"/>
+                            </Row>
+                            <Row>
+                                <input
+                                    type="checkbox"
+                                    name="checkedTC"
+                                    checked={state.checked}
+                                    onChange={handleChange}
+                                    required
+                                />
+                                <label htmlFor="checkbox"> Accept the Terms and Conditions</label>
                             </Row>
                             <Row className={"spacedRow"}>
                                 <button className="btn btn-lg login-btn" type="submit" onClick={handleSubmitClick}>
