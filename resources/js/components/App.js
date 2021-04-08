@@ -1,8 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {PublicRoute, PrivateRoute} from "react-private-public-route";
 import {Redirect, BrowserRouter, Route, Switch} from 'react-router-dom';
-
 import '../../sass/app.scss';
 
 import Header from './Header';
@@ -15,6 +13,10 @@ import Footer from './Footer';
 import Dialog from "./Dialog";
 import CreateProfile from './CreateProfile';
 import Verify from "./Verify";
+import PublicRoute from "./PublicRoute";
+import PrivateRoute from "./PrivateRoute";
+import Profile from "./Profile";
+import Dashboard from "./Dashboard";
 
 export default function App() {
 
@@ -23,15 +25,17 @@ export default function App() {
             <BrowserRouter>
                 <Header/>
                 <Switch>
-                    <PublicRoute exact path={'/register'}><Register/></PublicRoute>
-                    <PublicRoute exact path={'/login'}><Login/></PublicRoute>
-                    <PublicRoute exact path={'/sponsors'}><Sponsors/></PublicRoute>
-                    <PublicRoute exact path={'/home'}><Home/></PublicRoute>
-                    <PublicRoute exact path={'/about'}><About/></PublicRoute>
-                    <PublicRoute path={'/verify/:token'} redirect={"/home"}><Verify/></PublicRoute>
-                    <PublicRoute exact path={'/register/confirm'}><Dialog head={'Registration successful'}
+                    <PublicRoute restricted={true} exact path={'/register'}><Register/></PublicRoute>
+                    <PublicRoute restricted={true} exact path={'/login'}><Login/></PublicRoute>
+                    <PublicRoute restricted={true} exact path={'/sponsors'}><Sponsors/></PublicRoute>
+                    <PublicRoute restricted exact path={'/home'}><Home/></PublicRoute>
+                    <PublicRoute restricted={true} exact path={'/about'}><About/></PublicRoute>
+                    <PublicRoute restricted={true} path={'/verify/:token'} redirect={"/home"}><Verify/></PublicRoute>
+                    <PublicRoute restricted={true} exact path={'/register/confirm'}><Dialog head={'Registration successful'}
                                                                           body={'Please check your email for confirmation'}/></PublicRoute>
                     <PrivateRoute exact path={'/profiles/create'}><CreateProfile/></PrivateRoute>
+                    <PrivateRoute exact path={'/profile'}><Profile/></PrivateRoute>
+                    <PrivateRoute exact path={'/dashboard'}><Dashboard/></PrivateRoute>
                     <Redirect to={"/home"}/>
                 </Switch>
             </BrowserRouter>
