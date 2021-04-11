@@ -40,6 +40,10 @@
     color: white;
     border-color: $green-yellow;
 }
+.login-btn:hover {
+  background-color: $dark-grey;
+  color: $green-yellow;
+}
 
 .vertical-center {
   margin: 0;
@@ -51,4 +55,9 @@
 
 .spacedRow{
   margin-bottom: 12px;
+}
+
+.bottomdiv {
+  position: absolute;
+  bottom: 0;
 }

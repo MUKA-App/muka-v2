@@ -40,7 +40,7 @@ jobs:
         run: |
           git checkout -b tag-branch ${{ steps.get_version.outputs.VERSION }}
           npm install
-          npm run prod
+          MIX_APP_BASE_URL=${{ secrets.APP_URL_PRODUCTION }} npm run prod
 
       - name: Commit everything
         run: |

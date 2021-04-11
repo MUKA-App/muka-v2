@@ -1,18 +1,20 @@
 import '../../sass/login.scss';
-import React, {useState} from 'react';
-import {Container, Row, Col} from 'reactstrap';
 import hugeImg from '/images/huge_muka_logo.png';
-import axios from "axios";
+
+import React, {useState} from 'react';
+import axios from 'axios';
 import {withRouter} from "react-router-dom";
+import {Container, Row, Col} from 'reactstrap';
 import {toast, ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
-function Login(props) {
+function Register(props) {
 
     const [state, setState] = useState({
         email: "",
         password: "",
-        remember: false
+        confirmPassword: "",
+        checkedTC: false
     });
 
     const notify = (text) => toast(text);
@@ -24,6 +26,7 @@ function Login(props) {
             ...prevState,
             [id]: value
         }))
+        console.log(state);
     };
 
     const sendDetailsToServer = () => {
@@ -31,38 +34,45 @@ function Login(props) {
         const payload = {
             "email": state.email,
             "password": state.password,
-            "remember_token": state.remember
         };
 
-        axios.post(process.env.MIX_APP_BASE_URL + "/login", payload)
+        axios.post(process.env.MIX_APP_BASE_URL + "/register", payload)
             .then(function (response) {
                     switch (response.status) {
-                        case 200:
-                            localStorage.setItem('auth', 'true');
-                            props.history.push('/dashboard');
+                        case 201:
+                            props.history.push('/register/confirm');
                             break;
-                        case 401:
-                            notify("Incorrect password given!");
+                        case 409:
+                            notify("User already exists!");
                             break;
                         case 422:
-                            notify("The password must be at least 8 characters!");
+                            notify("Invalid credentials!");
+                            break;
+                        case 400:
+                        case 500:
+                            notify("Server error!");
                             break;
                         default:
-                            notify("Error occurred with code: " + response.status);
+                            notify("Other error occurred with code: " + response.status);
                     }
                 }
             )
             .catch(function (error) {
-                notify(error.response.data.message);
+                notify(error);
             });
     };
 
     const handleSubmitClick = (e) => {
+
         e.preventDefault();
         if (state.email === "") {
-            notify("You must use an email address!");
+            notify("You must add an email address!");
+        } else if (state.password !== state.confirmPassword) {
+            notify("Password and Confirm Password must be the same!");
         } else if (state.password.length < 8) {
             notify("The password must be at least 8 characters!")
+        } else if (!state.checkedTC) {
+            notify("Terms and Conditions must be accepted!");
         } else {
             sendDetailsToServer();
         }
@@ -86,6 +96,7 @@ function Login(props) {
                                 <Row className={"spacedRow"}>
                                     <input type="email"
                                            name="email"
+                                           id="email"
                                            className="form-control login-input"
                                            value={state.email}
                                            onChange={handleChange}
@@ -95,24 +106,35 @@ function Login(props) {
                                 <Row className={"spacedRow"}>
                                     <input type="password"
                                            name="password"
+                                           id="password"
                                            className="form-control login-input"
                                            value={state.password}
                                            onChange={handleChange}
                                            required
                                            placeholder="Password"/>
                                 </Row>
+                                <Row className={"spacedRow"}>
+                                    <input type="password"
+                                           name="confirmPassword"
+                                           id="confirmPassword"
+                                           className="form-control login-input"
+                                           value={state.confirmPassword}
+                                           onChange={handleChange}
+                                           required
+                                           placeholder="Confirm Password"/>
+                                </Row>
                                 <Row>
                                     <input
                                         type="checkbox"
-                                        name="remember"
-                                        checked={state.remember}
+                                        name="checkedTC"
+                                        checked={state.checkedTC}
                                         onChange={handleChange}
                                     />
-                                    <label htmlFor="checkbox"> I want to stay logged in</label>
+                                    <label htmlFor="checkbox"> Accept the Terms and Conditions</label>
                                 </Row>
                                 <Row className={"spacedRow"}>
                                     <button className="btn btn-lg login-btn" type="submit" onClick={handleSubmitClick}>
-                                        Sign in
+                                        Register
                                     </button>
                                 </Row>
                             </form>
@@ -137,4 +159,4 @@ function Login(props) {
     )
 }
 
-export default withRouter(Login);
+export default withRouter(Register);

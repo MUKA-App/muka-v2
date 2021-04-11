@@ -1,7 +1,9 @@
+@import 'variables';
+
 .headerContainer {
     width: 100%;
     min-height: 80px;
-    border-bottom: 2px solid #cbe54e;
+    border-bottom: 2px solid $green-yellow;
     background-color: white;
     font-size: 20px;
     display: flex;
@@ -18,18 +20,32 @@
     align-self: flex-end;
     margin: inherit;
     padding: 25px;
+    color: black;
+}
+.generalLink:hover{
+    text-decoration: none;
+    color: $dark-grey;
 }
 .loginLink{
-    color: #cbe54e;
+    color: $green-yellow;
     padding: 25px;
     height: 80px;
     text-align: center;
+}
+.loginLink:hover{
+    text-decoration: none;
+    color: $dark-grey;
 }
 .joinLink{
     text-align: center;
     border-radius: 10px;
     height: 80px;
     color: white;
-    background-color: #cbe54e;
+    background-color: $green-yellow;
     padding: 25px;
+}
+.joinLink:hover {
+    text-decoration: none;
+    background-color: $dark-grey;
+    color: $green-yellow;
 }
