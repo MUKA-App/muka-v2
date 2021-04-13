@@ -18,8 +18,10 @@ function Verify(props) {
                 }
             }
         ).catch(function (error) {
-        console.log(error);
+            console.log(error);
     });
+
+    return(<div>Verify</div>)
 }
 
 export default withRouter(Verify);
