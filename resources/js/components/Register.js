@@ -25,8 +25,7 @@ function Register(props) {
         setState(prevState => ({
             ...prevState,
             [id]: value
-        }))
-        console.log(state);
+        }));
     };
 
     const sendDetailsToServer = () => {
