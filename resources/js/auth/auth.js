@@ -1,5 +1,9 @@
-
+export const login = () => {
+    localStorage.setItem('auth', 'true');
+};
+export const logout = () => {
+    localStorage.removeItem('auth');
+};
 export const isLogin = () => {
-    if (localStorage.getItem('auth')) return true;
-    return false;
-}
+    return !!localStorage.getItem('auth');
+};
