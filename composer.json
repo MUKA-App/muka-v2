@@ -18,7 +18,7 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.2",
         "league/flysystem-aws-s3-v3": "~1.0",
-        "league/openapi-psr7-validator": "^0.15.2",
+        "league/openapi-psr7-validator": "^0.16",
         "menarasolutions/geographer": "^0.3.9",
         "mews/purifier": "^3.3",
         "nyholm/psr7": "^1.4",
