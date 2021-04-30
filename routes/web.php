@@ -20,8 +20,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [ReactPageController::class, 'index']);
+Route::get('/', [ReactPageController::class, 'index'])->name('home');
 Route::get('/login', [ReactPageController::class, 'index'])->name('login');
+
+Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::post('/login', [LoginController::class, 'login']);
 
