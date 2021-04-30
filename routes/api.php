@@ -19,18 +19,3 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-
-
-/*
-|--------------------------------------------------------------------------
-| API Profile Routes
-|--------------------------------------------------------------------------
-|
-*/
-Route::prefix('/profile')->middleware('auth')->group(function () {
-    Route::get('/', [ProfileController::class, 'mine']);
-    Route::post('/', [ProfileController::class, 'create']);
-    Route::patch('/', [ProfileController::class, 'edit']);
-    Route::put('/avatar', [ProfileAvatarController::class, 'putAvatar']);
-    Route::get('/{slug}', [ProfileController::class, 'show']);
-});
