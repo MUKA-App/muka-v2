@@ -14,14 +14,14 @@ services:
       mukav2:
 
   php:
-    image: mukaapp/dev-env-php:v1
+    image: mukaapp/dev-env-php:latest
     volumes:
       - ./:/var/www/html
     networks:
       mukav2:
 
   worker:
-    image: mukaapp/dev-env-php:v1
+    image: mukaapp/dev-env-php:latest
     command: php artisan queue:listen
     volumes:
       - ./:/var/www/html
@@ -68,6 +68,7 @@ services:
       - '11211:11211'
     networks:
       mukav2:
+
 
 volumes:
   db-volume:
