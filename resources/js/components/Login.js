@@ -6,6 +6,7 @@ import axios from "axios";
 import {withRouter} from "react-router-dom";
 import {toast, ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import {login} from '../auth/auth';
 
 function Login(props) {
 
@@ -35,26 +36,19 @@ function Login(props) {
         };
 
         axios.post(process.env.MIX_APP_BASE_URL + "/login", payload)
-            .then(function (response) {
-                    switch (response.status) {
-                        case 200:
-                            localStorage.setItem('auth', 'true');
-                            props.history.push('/dashboard');
-                            break;
-                        case 401:
-                            notify("Incorrect password given!");
-                            break;
-                        case 422:
-                            notify("The password must be at least 8 characters!");
-                            break;
-                        default:
-                            notify("Error occurred with code: " + response.status);
+            .then(response => {
+                    if (response.status === 200) {
+                        login();
+                        props.history.push('/dashboard');
+                    } else {
+                        notify(response.response.data.message);
                     }
                 }
             )
             .catch(function (error) {
-                notify(error.response.data.message);
-            });
+                    notify(error.response.data.message);
+                }
+            );
     };
 
     const handleSubmitClick = (e) => {
