@@ -4,6 +4,8 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\RegistrationController;
 use App\Http\Controllers\Auth\VerificationController;
+use App\Http\Controllers\Profiles\ProfileAvatarController;
+use App\Http\Controllers\Profiles\ProfileController;
 use App\Http\Controllers\ReactPageController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,8 +20,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [ReactPageController::class, 'index']);
+Route::get('/', [ReactPageController::class, 'index'])->name('home');
 Route::get('/login', [ReactPageController::class, 'index'])->name('login');
+
+Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::post('/login', [LoginController::class, 'login']);
 
@@ -48,6 +52,31 @@ Route::get('/password/{any}', [ReactPageController::class, 'index'])
 Route::prefix('/password')->middleware('guest')->group(function () {
     Route::post('/forgot', [PasswordController::class, 'sendEmail']);
     Route::post('/reset', [PasswordController::class, 'resetPassword']);
+});
+
+
+/*
+|--------------------------------------------------------------------------
+| API Routes
+|--------------------------------------------------------------------------
+|
+*/
+Route::prefix('/api')->middleware('auth')->group(function () {
+
+    /*
+    |--------------------------------------------------------------------------
+    | Profile Routes
+    |--------------------------------------------------------------------------
+    |
+    */
+
+    Route::prefix('/profile')->group(function () {
+        Route::get('/', [ProfileController::class, 'mine']);
+        Route::post('/', [ProfileController::class, 'create']);
+        Route::patch('/', [ProfileController::class, 'edit']);
+        Route::put('/avatar', [ProfileAvatarController::class, 'putAvatar']);
+        Route::get('/{slug}', [ProfileController::class, 'show']);
+    });
 });
 
 

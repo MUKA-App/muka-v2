@@ -81,4 +81,12 @@ class LoginController extends Controller
         Auth::login($user, $rememberToken);
         return env('APP_URL') . '/home';
     }
+
+    public function logout()
+    {
+        Auth::logout();
+        session()->flush();
+
+        return redirect(route('home'));
+    }
 }
