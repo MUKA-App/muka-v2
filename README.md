@@ -115,20 +115,23 @@ The application will be available at [muka.local](https://muka.local)
 ## Running commands
 Commands are executed against the docker containers via `./dev`
 
-Available commands are `up`, `down`, `build`, `composer`, `artisan` , `phpunit`, `cs` (codesniffer) and `larastan`
+Available commands are `up`, `down`, `build`, `composer`, `artisan` , `phpunit`, `cs` (codesniffer), `larastan` and `npm`
 
 ```bash
 # e.g installing composer dependencies 
 ./dev composer install
 
 # e.g clearing artisan cache
-./dev console debug:router
+./dev artisan cache:clear
 
 # e.g running codesniffer with diff reporting
 ./dev cs --report=diff
 
-# e.g running phpstan
-./dev phpstan
+# e.g running larastan
+./dev larastan
+
+# e.g install frontend packages
+./dev npm install
 ```
 
 ## Running locally
@@ -143,6 +146,12 @@ Assuming the containers are built but not running, navigate to your cloned direc
 
 # Run migrations
 ./dev artisan migrate
+
+# Install frontend dependencies
+./dev npm install
+
+# Build frontend files
+./dev npm run dev
 ```
 
 In order to take down the containers call:
