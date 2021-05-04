@@ -70,7 +70,7 @@ function Login(props) {
 
     return (
         <div>
-            <Container>
+            <Container className={"footeredContent"}>
                 <Row>
                     <Col
                         className={"halfColumn col-sm pt-lg-6 pt-md-3 pt-sm-1 pt-0 pr-lg-5 pr-xl-6 justify-content-center align-items-center"}>
