@@ -1,10 +1,11 @@
 .footerContainer{
-    position: static;
+    position: fixed;
     bottom: 0px;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: -1;
 }
 
 @media (max-width: 767px) {
