@@ -12,7 +12,7 @@ export const isLogin = () => {
     return !!localStorage.getItem('auth');
 };
 
-export function hasProfile() {
+export const hasProfile = async function getProfile() {
     let found = false;
     axios.get(process.env.MIX_APP_BASE_URL + "/api/profile")
         .then(response => {
