@@ -1,20 +1,21 @@
 import '../../sass/login.scss';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Col, Container, Row} from "reactstrap";
 import {toast, ToastContainer} from "react-toastify";
 import axios from "axios";
 import {withRouter} from "react-router-dom";
+import locations from '../data/locations.json';
+import instruments from '../data/instruments.json';
 
 function CreateProfile(props) {
 
-    axios.get(process.env.MIX_APP_BASE_URL + "/api/profile")
-        .then(response =>{
-            if(response.status === 200){
-                console.log("GOTODASH");
+    // redirect to dashboard if user has profile
+    useEffect(() => {
+        axios.get(process.env.MIX_APP_BASE_URL + "/api/profile")
+            .then(response => {
                 props.history.push('/dashboard');
-            }
-        })
-        .catch(error => console.log(error));
+            })
+    }, []);
 
     const [state, setState] = useState({
         pageNo: 1,
@@ -38,13 +39,15 @@ function CreateProfile(props) {
             value = e.target.checked;
         } else if (e.target.type === "select-multiple") {
             value = Array.from(e.target.selectedOptions, option => option.value);
+        } else if (e.target.type === "file") {
+            value = e.target.files[0];
         } else {
             value = e.target.value;
         }
         setState(prevState => ({
             ...prevState,
             [id]: value
-        }))
+        }));
     };
 
     const handleSubmitClick = (e) => {
@@ -54,7 +57,7 @@ function CreateProfile(props) {
             "last_name": state.lastName,
             "bio": state.bio,
             "gender": state.gender,
-            "country": state.country,
+            "country": locations.filter(loc => loc.city === state.city)[0].country_code,
             "city": state.city,
             "instruments": state.instruments,
             "institution": state.institution,
@@ -71,11 +74,12 @@ function CreateProfile(props) {
                     if (response.status === 201) {
                         props.history.push('/dashboard');
                     } else {
-                        notify(error.response.data.errors);
+                        console.log(response);
                     }
                 })
                 .catch(error => {
-                    Object.values(error.response.data.errors).forEach(e => notify(e.join(',')));
+                    console.log(error.response);
+                    // Object.values(error.response.errors).forEach(e => notify(e.join(',')));
                 });
         }
     };
@@ -97,11 +101,7 @@ function CreateProfile(props) {
         }
     };
 
-    const instruments = ["Accordion", "Acoustic Guitar", "Bagpipes", "Banjo", "Bass Guitar", "Bongo Drums", "Bugle", "Cello", "Clarinet", "Cymbals", "Drums", "Electric Guitar",
-        "Flute", "French Horn", "Harmonica", "Harp", "Keyboard", "Maracas", "Organ", "Pan Flute", "Piano", "Recorder", "Saxophone", "Sitar", "Tambourine",
-        "Percussion", "Trombone", "Trumpet", "Tuba", "Ukulele", "Violin", "Xylophone", "Bassoon", "Castanets", "Didgeridoo", "Double Bass", "Gong", "Harpsichord",
-        "Lute", "Mandolin", "Oboe", "Piccolo", "Viola", "Singer", "Composer/Songwriter", "Euphonium", "DJ", "Producer", "Fiddle", "Vocals"
-    ];
+    const uniqueLocations = [...new Set(locations.map(loc => loc.country))];
 
     return (
         <div>
@@ -110,12 +110,11 @@ function CreateProfile(props) {
                     <Row>
                         <Col
                             className={"halfColumn col-sm pt-lg-6 pt-md-3 pt-sm-1 pt-0 pr-lg-5 pr-xl-6 justify-content-center align-items-center"}>
-                            <div className={" vertical-center"}>
-                                <h1 className={"welcomeText"}>Get Ready to Connect</h1>
-                                {/*put here upload photo input field*/}
-                                <h5 className={"joinText"}>Join MUKA now and find people with the same passion as
-                                    you!</h5>
-                            </div>
+                            <Row className={"spacedRow"}>
+                                <h1 className={"welcomeText"}>Sign up to Connect</h1>
+                                {/*Photo input goes here*/}
+                                <h5 className={"joinText"}>Photo with your instrument is highly recommended :)</h5>
+                            </Row>
                         </Col>
                         <Col
                             className={"halfColumn col-sm pt-lg-6 pt-md-3 pt-sm-1 pt-0 pr-lg-5 pr-xl-6 justify-content-center align-items-center"}>
@@ -123,7 +122,7 @@ function CreateProfile(props) {
                                 <Row className={"spacedRow"}>
                                     <input type="text"
                                            name="firstName"
-                                           className="form-control"
+                                           className="form-control login-input"
                                            value={state.firstName}
                                            onChange={handleChange}
                                            required
@@ -132,41 +131,40 @@ function CreateProfile(props) {
                                 <Row className={"spacedRow"}>
                                     <input type="text"
                                            name="lastName"
-                                           className="form-control"
+                                           className="form-control login-input"
                                            value={state.lastName}
                                            onChange={handleChange}
                                            required
                                            placeholder="Last Name"/>
                                 </Row>
                                 <Row className={"spacedRow"}>
-                                    <input type="text"
-                                           name="country"
-                                           className="form-control"
-                                           value={state.country}
-                                           onChange={handleChange}
-                                           required
-                                           placeholder="Country"/>
+                                    <select name="country" onChange={handleChange} className="form-control login-input">
+                                        <option value="country" defaultValue hidden>Country</option>
+                                        {uniqueLocations.map((item) =>
+                                            <option key={item} value={item}>{item}</option>
+                                        )}
+                                    </select>
+
                                 </Row>
                                 <Row className={"spacedRow"}>
-                                    <input type="text"
-                                           name="city"
-                                           className="form-control"
-                                           value={state.city}
-                                           onChange={handleChange}
-                                           required
-                                           placeholder="City"/>
+                                    <select name="city" onChange={handleChange} className="form-control login-input">
+                                        <option value="city" defaultValue hidden>City</option>
+                                        {locations.filter(loc => loc.country === state.country).map((item) =>
+                                            <option key={item.city} value={item.city}>{item.city}</option>
+                                        )}
+                                    </select>
                                 </Row>
                                 <Row className={"spacedRow"}>
                                     <input type="date"
                                            name="birth"
-                                           className="form-control"
+                                           className="form-control login-input"
                                            value={state.birth}
                                            onChange={handleChange}
                                            required
                                            placeholder="Birthday"/>
                                 </Row>
                                 <Row className={"spacedRow"}>
-                                    <select name="gender" onChange={handleChange} className="form-control">
+                                    <select name="gender" onChange={handleChange} className="form-control login-input">
                                         <option value="gender" defaultValue hidden>Gender</option>
                                         <option value="Male">Male</option>
                                         <option value="Female">Female</option>
@@ -189,12 +187,11 @@ function CreateProfile(props) {
                     <Row>
                         <Col
                             className={"halfColumn col-sm pt-lg-6 pt-md-3 pt-sm-1 pt-0 pr-lg-5 pr-xl-6 justify-content-center align-items-center"}>
-                            <div className={" vertical-center"}>
-                                <h1 className={"welcomeText"}>Get Ready to Connect</h1>
-                                {/*put here upload photo input field*/}
-                                <h5 className={"joinText"}>Join MUKA now and find people with the same passion as
-                                    you!</h5>
-                            </div>
+                            <Row className={"spacedRow"}>
+                                <h1 className={"welcomeText"}>Sign up to Connect</h1>
+                                {/*Photo input goes here*/}
+                                <h5 className={"joinText"}>Photo with your instrument is highly recommended :)</h5>
+                            </Row>
                         </Col>
                         <Col
                             className={"halfColumn col-sm pt-lg-6 pt-md-3 pt-sm-1 pt-0 pr-lg-5 pr-xl-6 justify-content-center align-items-center"}>
@@ -202,14 +199,15 @@ function CreateProfile(props) {
                                 <Row className={"spacedRow"}>
                                     <input type="text"
                                            name="institution"
-                                           className="form-control"
+                                           className="form-control login-input"
                                            value={state.institution}
                                            onChange={handleChange}
                                            required
                                            placeholder="Institution"/>
                                 </Row>
                                 <Row className={"spacedRow"}>
-                                    <select name="instruments" onChange={handleChange} className="form-control"
+                                    <select name="instruments" onChange={handleChange}
+                                            className="form-control login-input"
                                             multiple>
                                         <option value="instrument" defaultValue hidden>Instrument</option>
                                         {instruments.map((item) =>
@@ -221,7 +219,7 @@ function CreateProfile(props) {
                                 <Row className={"spacedRow"}>
                                     <input type="text"
                                            name="bio"
-                                           className="form-control"
+                                           className="form-control login-input"
                                            value={state.bio}
                                            onChange={handleChange}
                                            required
@@ -229,7 +227,8 @@ function CreateProfile(props) {
                                 </Row>
 
                                 <Row className={"spacedRow"}>
-                                    <button className="" type="submit" onClick={changePage}>
+                                    <button className="btn btn-lg login-btn login-btn-backbtn" type="submit"
+                                            onClick={changePage}>
                                         Go Back
                                     </button>
                                 </Row>

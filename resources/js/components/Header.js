@@ -22,7 +22,7 @@ function Header(props) {
 
     return (
         location.pathname === '/profiles/create' ?
-            <div className={"headerContainer"}></div>
+            <div className={"headerContainer"}><img src={logo} className={"headerLogo"} alt="Logo"/></div>
             :
             <div className={"headerContainer"}>
                 <img src={logo} className={"headerLogo"} alt="Logo"/>
