@@ -25,7 +25,7 @@ function Register(props) {
         setState(prevState => ({
             ...prevState,
             [id]: value
-        }))
+        }));
     };
 
     const sendDetailsToServer = () => {
@@ -36,29 +36,15 @@ function Register(props) {
         };
 
         axios.post(process.env.MIX_APP_BASE_URL + "/register", payload)
-            .then(function (response) {
-                    switch (response.status) {
-                        case 201:
-                            props.history.push('/register/confirm');
-                            break;
-                        case 409:
-                            notify("User already exists!");
-                            break;
-                        case 422:
-                            notify("Invalid credentials!");
-                            break;
-                        case 400:
-                        case 500:
-                            notify("Server error!");
-                            break;
-                        default:
-                            notify("Other error occurred with code: " + response.status);
+            .then(response => {
+                    if (response.status === 201) {
+                        props.history.push('/register/confirm');
+                    } else {
+                        notify(response.data.message);
                     }
                 }
             )
-            .catch(function (error) {
-                notify(error);
-            });
+            .catch(error => notify(error.response));
     };
 
     const handleSubmitClick = (e) => {
