@@ -5,4 +5,41 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: -1;
+}
+
+@media (max-width: 767px) {
+    .footer-img{
+        max-width: 100%;
+        max-height: 2rem;
+        height: auto;
+        width: auto\9;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .footer-img{
+        max-width: 100%;
+        max-height: 3rem;
+        height: auto;
+        width: auto\9;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+    .footer-img{
+        max-width: 100%;
+        max-height: 5rem;
+        height: auto;
+        width: auto\9;
+    }
+}
+
+@media (min-width: 1200px) {
+    .footer-img{
+        max-width: 100%;
+        max-height: 8rem;
+        height: auto;
+        width: auto\9;
+    }
 }
