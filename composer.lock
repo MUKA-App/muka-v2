@@ -1995,16 +1995,16 @@
         },
         {
             "name": "menarasolutions/geographer",
-            "version": "v0.3.10",
+            "version": "v0.3.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/MenaraSolutions/geographer.git",
-                "reference": "25a2ed4b8c529af076143b0e6189cf5060b43e9e"
+                "reference": "df444197ac0d580d976dc40004b4ee17bab0bb39"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/MenaraSolutions/geographer/zipball/25a2ed4b8c529af076143b0e6189cf5060b43e9e",
-                "reference": "25a2ed4b8c529af076143b0e6189cf5060b43e9e",
+                "url": "https://api.github.com/repos/MenaraSolutions/geographer/zipball/df444197ac0d580d976dc40004b4ee17bab0bb39",
+                "reference": "df444197ac0d580d976dc40004b4ee17bab0bb39",
                 "shasum": ""
             },
             "require": {
@@ -2014,6 +2014,7 @@
             "require-dev": {
                 "codeclimate/php-test-reporter": "dev-master",
                 "illuminate/support": "5.*",
+                "menarasolutions/geographer-da": "0.*",
                 "menarasolutions/geographer-de": "0.*",
                 "menarasolutions/geographer-nl": "0.*",
                 "menarasolutions/geographer-ru": "0.*",
@@ -2051,22 +2052,22 @@
             ],
             "support": {
                 "issues": "https://github.com/MenaraSolutions/geographer/issues",
-                "source": "https://github.com/MenaraSolutions/geographer/tree/v0.3.10"
+                "source": "https://github.com/MenaraSolutions/geographer/tree/v0.3.11"
             },
-            "time": "2021-04-14T00:52:38+00:00"
+            "time": "2021-09-01T12:15:17+00:00"
         },
         {
             "name": "menarasolutions/geographer-data",
-            "version": "v0.1.11",
+            "version": "v0.1.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/MenaraSolutions/geographer-data.git",
-                "reference": "0566c0e657f46355dffe94ce816cae8374fa5ff7"
+                "reference": "37c4096716c2d6405e2e9caebf9c6d84ed0dadd1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/MenaraSolutions/geographer-data/zipball/0566c0e657f46355dffe94ce816cae8374fa5ff7",
-                "reference": "0566c0e657f46355dffe94ce816cae8374fa5ff7",
+                "url": "https://api.github.com/repos/MenaraSolutions/geographer-data/zipball/37c4096716c2d6405e2e9caebf9c6d84ed0dadd1",
+                "reference": "37c4096716c2d6405e2e9caebf9c6d84ed0dadd1",
                 "shasum": ""
             },
             "type": "library",
@@ -2095,9 +2096,9 @@
             ],
             "support": {
                 "issues": "https://github.com/MenaraSolutions/geographer-data/issues",
-                "source": "https://github.com/MenaraSolutions/geographer-data/tree/v0.1.11"
+                "source": "https://github.com/MenaraSolutions/geographer-data/tree/v0.1.13"
             },
-            "time": "2021-04-14T00:47:58+00:00"
+            "time": "2021-08-09T03:33:02+00:00"
         },
         {
             "name": "mews/purifier",
